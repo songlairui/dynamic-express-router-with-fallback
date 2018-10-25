@@ -22,4 +22,12 @@ router.post('/fallback', bodyParser.json(), async (req, res) => {
   res.json({ ...payload, mark: 'fallback /fallback - post' })
 })
 
+router.post('/dissect', (req, res) => {
+  const parser = bodyParser.json()
+  parser(req, res, () => {
+    const payload = req.body
+    res.json({ ...payload, mark: 'fallback /fallback - post' })
+  })
+})
+
 module.exports = router
