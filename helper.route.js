@@ -8,7 +8,11 @@ const router = new Proxy(originRouter, {
   get(instance, method) {
     if (methods.includes(method)) {
       return (url, cb) => {
-        instance[method](url, bodyParser.json(), cb)
+        instance[method](url, (req, res, next) => {
+          bodyParser.json()(req, res, () => {
+            cb(req, res, next)
+          })
+        })
       }
     }
     return instance[method]
